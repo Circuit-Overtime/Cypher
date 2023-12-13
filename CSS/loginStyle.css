@@ -1,0 +1,111 @@
+body
+{
+    min-height: 150vh;
+    margin-bottom: 90px;
+    background: #222;
+    overflow: hidden;
+}
+.loginform
+{
+    position: absolute;
+    height: 570px;
+    width: 90%;
+    top: 5%;
+    left: 5%;
+    background: #000000a1;
+    backdrop-filter: blur(15px);
+    clip-path: polygon(0 0, 100% 0, 100% 99%, 0 72%);
+    border-radius: 25px;
+    border-bottom-right-radius: 50px;
+    display: block;
+    transition: 0.5s;
+    transform: translateY(-520px);
+}
+.registerForm
+{
+    position: absolute;
+    height: 600px;
+    top: 10%;
+    width: 90%;
+    left: 5%;
+    background: #000000a1;
+    backdrop-filter: blur(15px);
+    border-top-left-radius: 50px;
+    border-radius: 25px;
+    clip-path: polygon(0 0, 100% 25%, 100% 100%, 0 100%);
+    transform: translateY(0px);
+    margin-bottom:250px ;
+    display: block;
+    transition: 0.5s;
+
+}
+
+.LogoutForm
+{
+    position: absolute;
+    height: 400px;
+    top: 23%;
+    width: 90%;
+    left: 5%;
+    background: #000000a1;
+    backdrop-filter: blur(15px);
+    border-top-left-radius: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+    transform: translateY(1204px);
+    margin-bottom:250px ;
+    display: block;
+    transition: 0.5s;
+
+}
+.blob1
+{
+    position: absolute;
+    transform: rotate(-45deg) scale(2);
+    left: 2%;
+    top: 5%;
+    z-index: -1;
+    animation: rotating 12s linear infinite;
+    filter: drop-shadow(0 0 20px #ff4e00);
+
+}
+
+.blob2
+{
+    position: absolute;
+    transform: rotate(-45deg) scale(2) translateY(115px);
+    left: 25%;
+    top: 30%;
+    z-index: -1;
+    animation: rotating2 8s linear infinite;
+    filter: drop-shadow(0 0 20px #12fff7);
+}
+@keyframes rotating {
+    0%
+    {
+        transform: rotate(-45deg) scale(2);
+    }
+    50%
+    {
+        transform: rotate(-55deg) scale(2) ;
+    }
+    100%
+    {
+        transform: rotate(-45deg) scale(2);
+    }
+}
+
+@keyframes rotating2 {
+    0%
+    {
+        transform: rotate(-45deg) scale(2) translateY(115px);
+    }
+    50%
+    {
+        transform: rotate(-40deg) scale(2) translateY(115px);
+    }
+    100%
+    {
+        transform: rotate(-45deg) scale(2) translateY(115px);
+    }
+}
