@@ -8,7 +8,7 @@ var showAddPwd;
 var ViewModeReadOnlyTimer;
 
 
-window.onload = userGreetings(), scrollTop();
+window.onload = userGreetings(), scrollTop(), checkLocalStorage();
 const firebaseConfig = {
     apiKey: "AIzaSyDWkgzZeTcQOGgDFC6UFs0LUA72KHtOG_4",
     authDomain: "psswdmanager-68a29.firebaseapp.com",
@@ -124,6 +124,10 @@ document.getElementById("CrossAllPwdDown").addEventListener("click", () => {
 
 
 
+function checkLocalStorage()
+{
+  (localStorage.getItem("CurUsername")) ? null : location.replace("psswdlogin.html");
+}
 
 
 
