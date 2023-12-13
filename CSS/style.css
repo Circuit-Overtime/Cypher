@@ -454,7 +454,7 @@ ion-icon
     width: 350px;
     height: 650px;
     background: transparent;
-    background-image: url("noData.png");
+    background-image: url("./IMG/noData.png");
     background-size: cover;
     top: -76%;
     left: 50%;
