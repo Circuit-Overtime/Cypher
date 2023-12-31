@@ -1,5 +1,6 @@
 globalThis.selected_service = "Custom";
 var database = firebase.database();
+appendLocation = null;
 StarShine();
 
 
@@ -39,7 +40,7 @@ document.getElementById("submitEntry").addEventListener("click", () => {
     loginUsername = document.getElementById("usernameInp").value;
     loginPassword = document.getElementById("passwordInp").value;
     loginEmail = document.getElementById("emailInp").value;
-    addToDBLogin(loginUsername, loginPassword, loginEmail, selected_service);
+    addToDBLogin(loginUsername, loginPassword, loginEmail, selected_service, appendLocation);
 
 });
 
@@ -50,23 +51,20 @@ function submitServiceAddPassword(self)
 
 }
 
-function addToDBLogin(loginUsername, loginPassword, loginEmail, serviceAddPassword)
+function addToDBLogin(loginUsername, loginPassword, loginEmail, serviceAddPassword, appendLocation)
 {
-
-  document.getElementById("usernameInp").value = "";
-  document.getElementById("passwordInp").value = "";
-  document.getElementById("emailInp").value = "";
+  console.log(appendLocation);
   selected_service = "Custom";
 
   document.getElementById("successLoaderContainer").classList.add("OpacityActive");
   document.getElementById("addPsswd").classList.toggle("active");
 
-  
-
-
     let timestamp = new Date().getTime();
     uniqueTimestampId = timestamp+"_Login"
     UsrNameDirectory = localStorage.getItem("CurUsername")+"/";
+    appendLocation == null ? appendLocation = UsrNameDirectory+uniqueTimestampId : appendLocation = UsrNameDirectory+appendLocation;
+    // appendLocation = UsrNameDirectory+appendLocation || UsrNameDirectory + uniqueTimestampId;
+    console.log("New Append Location " + appendLocation);
 
       let numberOfTilesSpawned = document.querySelectorAll(".tile").length;
   
@@ -76,10 +74,7 @@ function addToDBLogin(loginUsername, loginPassword, loginEmail, serviceAddPasswo
       }, 1300 );
       
  
-   
-   
-
-    firebase.database().ref(UsrNameDirectory + uniqueTimestampId).set({
+    firebase.database().ref(appendLocation).push({
         username: loginUsername,
         email: loginEmail,
         password : loginPassword,
@@ -88,7 +83,7 @@ function addToDBLogin(loginUsername, loginPassword, loginEmail, serviceAddPasswo
         unique_id : String(uniqueTimestampId)
       }, 
       
-     
+    
 
       (error) => {
         if (error) {
@@ -97,7 +92,9 @@ function addToDBLogin(loginUsername, loginPassword, loginEmail, serviceAddPasswo
           console.log("Data saved successfully!");
           setTimeout(() => {
             document.getElementById("successLoaderContainer").classList.remove("OpacityActive");
-            
+            document.getElementById("usernameInp").value = "";
+            document.getElementById("passwordInp").value = "";
+            document.getElementById("emailInp").value = "";
             clearInterval(TilesAnimationInterval);
           }, 3300);
          
