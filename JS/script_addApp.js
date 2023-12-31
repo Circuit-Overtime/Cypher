@@ -1,3 +1,5 @@
+var database = firebase.database();
+appendLocation = null;
 
 document.getElementById("SeePwd").addEventListener("click", () => {
     document.getElementById("SeePwd").classList.contains("hidden") ? (document.getElementById("SeePwd").classList.remove("hidden")) (document.getElementById("SeePwd").setAttribute("class", "fa-solid fa-eye-slash")) : (document.getElementById("SeePwd").classList.add("hidden")) (document.getElementById("SeePwd").setAttribute("class", "fa-solid fa-eye hidden"));
@@ -36,16 +38,11 @@ document.getElementById("caretDownApp").addEventListener("click",() => {
 document.getElementById("submitEntryApp").addEventListener("click", () => {
     AppNameEntered = document.getElementById("usernameInpApp").value;
     AppPasswordEntered = document.getElementById("passwordInpApp").value;
-     addAppToDB(AppNameEntered, AppPasswordEntered);
+     addAppToDB(AppNameEntered, AppPasswordEntered, appendLocation);
 
 })
-function addAppToDB(appname, app_password)
+function addAppToDB(appname, app_password, appendLocation)
 {   
-
-    document.getElementById("usernameInpApp").value = "";
-  document.getElementById("passwordInpApp").value = "";
-
-
     document.getElementById("successLoaderContainer").classList.add("OpacityActive");
   setTimeout(() => {
     document.getElementById("addApp").classList.toggle("active");
@@ -55,7 +52,7 @@ function addAppToDB(appname, app_password)
     let timestamp = new Date().getTime();
     uniqueTimestampId = timestamp+"_App"
     UsrNameDirectory = localStorage.getItem("CurUsername")+"/";
-
+    appendLocation == null ? appendLocation = UsrNameDirectory+uniqueTimestampId : appendLocation = UsrNameDirectory+appendLocation;
       let numberOfTilesSpawned = document.querySelectorAll(".tile").length;
   
       var TilesAnimationInterval = setInterval(() => {
@@ -63,7 +60,7 @@ function addAppToDB(appname, app_password)
        document.querySelectorAll(".tile")[n].click();
       }, 1300 );
       
-    firebase.database().ref(UsrNameDirectory + uniqueTimestampId).set({
+    firebase.database().ref(appendLocation).push({
         AppName: appname,
         AppPassword: app_password,
         typeOfData : String(uniqueTimestampId.split("_")[1]),
@@ -79,6 +76,8 @@ function addAppToDB(appname, app_password)
           console.log("Data saved successfully!");
           setTimeout(() => {
             document.getElementById("successLoaderContainer").classList.remove("OpacityActive");
+            document.getElementById("usernameInpApp").value = "";
+            document.getElementById("passwordInpApp").value = "";
             
             clearInterval(TilesAnimationInterval);
           }, 3300);
